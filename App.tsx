@@ -1,3 +1,4 @@
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { StatusBar } from "expo-status-bar";
 import { useCallback, useState } from "react";
 
@@ -23,14 +24,16 @@ export default function App() {
   }
 
   return (
-    <SafeAreaProvider>
-      <StatusBar
-        style="dark"
-        backgroundColor="transparent"
-        animated={true}
-        translucent
-      />
-      <AppRoutes />
-    </SafeAreaProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <SafeAreaProvider>
+        <StatusBar
+          style="dark"
+          backgroundColor="transparent"
+          animated={true}
+          translucent
+        />
+        <AppRoutes />
+      </SafeAreaProvider>
+    </GestureHandlerRootView>
   );
 }

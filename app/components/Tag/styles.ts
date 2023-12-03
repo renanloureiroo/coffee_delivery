@@ -9,6 +9,7 @@ export const $container: ViewStyle = {
   borderColor: THEME.COLORS.PURPLE,
   alignItems: "center",
   justifyContent: "center",
+  height: 25,
 };
 
 export const $text: TextStyle = {

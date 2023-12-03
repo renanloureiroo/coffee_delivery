@@ -1,17 +1,11 @@
-import Animated, { Keyframe } from "react-native-reanimated";
+import Animated, { Easing, SlideInRight } from "react-native-reanimated";
 
-import { ViewToken, useWindowDimensions } from "react-native";
+import { Platform, ViewToken } from "react-native";
 import { Card } from "@components/Card";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 export const HorizontalScroll = () => {
   const [activeIndex, setActiveIndex] = useState<string>();
-  const { width } = useWindowDimensions();
-
-  const cardActiveWidth = width * 0.5546;
-  const cardWidth = width * 0.4373;
-  const snapInterval = width - cardActiveWidth + 60;
-  const snapInterval2 = width - cardWidth;
 
   const data = [
     {
@@ -43,57 +37,45 @@ export const HorizontalScroll = () => {
   const onViewableItemsChanged = useRef(
     ({ viewableItems }: { viewableItems: ViewToken[] }) => {
       if (viewableItems.length > 0) {
-        console.log(viewableItems);
-        if (viewableItems.length <= 2) {
-          if (viewableItems[0].item.id === data[0].id) {
-            setActiveIndex((s) => viewableItems?.[0]?.item?.id ?? s);
+        if (Platform.OS === "ios") {
+          if (viewableItems.length <= 2) {
+            if (viewableItems[0].item.id === data[0].id) {
+              setActiveIndex((s) => viewableItems?.[0]?.item?.id ?? s);
+            } else {
+              setActiveIndex((s) => viewableItems?.[1]?.item?.id ?? s);
+            }
           } else {
             setActiveIndex((s) => viewableItems?.[1]?.item?.id ?? s);
           }
         } else {
-          setActiveIndex((s) => viewableItems?.[1]?.item?.id ?? s);
+          if (viewableItems.length <= 3) {
+            if (viewableItems[0].item.id === data[0].id) {
+              setActiveIndex((s) => viewableItems?.[0]?.item?.id ?? s);
+            } else {
+              setActiveIndex((s) => viewableItems?.[1]?.item?.id ?? s);
+            }
+          } else {
+            setActiveIndex((s) => viewableItems?.[1]?.item?.id ?? s);
+          }
         }
       }
     }
   );
 
-  const $scrollHorizontalKeyframe = new Keyframe({
-    0: {
-      transform: [
-        {
-          translateX: width,
-        },
-
-        {
-          scale: 0.5,
-        },
-      ],
-    },
-
-    100: {
-      transform: [
-        {
-          translateX: 0,
-        },
-
-        {
-          scale: 1,
-        },
-      ],
-    },
-  });
-
   return (
     <Animated.FlatList
-      entering={$scrollHorizontalKeyframe.delay(400).duration(300)}
+      entering={SlideInRight.delay(300)
+        .duration(500)
+        .easing(Easing.in(Easing.quad))}
       style={{
-        top: -140,
+        bottom: -180,
+        zIndex: 5,
         overflow: "visible",
-        maxHeight: 323,
+        height: 323,
+        position: "absolute",
       }}
       horizontal
-      snapToAlignment={"center"}
-      snapToInterval={activeIndex === data[0].id ? snapInterval : snapInterval2}
+      snapToInterval={165}
       onViewableItemsChanged={onViewableItemsChanged.current}
       showsHorizontalScrollIndicator={false}
       data={data}
@@ -106,12 +88,12 @@ export const HorizontalScroll = () => {
           title={item.title}
           description={item.description}
           active={item.id === activeIndex}
+          variant="emphasis"
         />
       )}
       contentContainerStyle={{
         columnGap: 32,
-        paddingLeft: 32,
-        paddingRight: cardWidth / 2,
+        paddingHorizontal: 32,
         alignItems: "center",
       }}
     />

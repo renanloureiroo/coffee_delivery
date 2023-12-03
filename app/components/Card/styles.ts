@@ -9,7 +9,6 @@ export const $container: ViewStyle = {
   backgroundColor: THEME.COLORS.GRAY_800,
   alignItems: "center",
   position: "relative",
-  overflow: "visible",
 };
 
 export const $containerCardCatalog: ViewStyle = {

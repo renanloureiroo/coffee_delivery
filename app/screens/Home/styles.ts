@@ -2,6 +2,11 @@ import { THEME } from "@shared/theme";
 import { ImageStyle, ViewStyle } from "react-native";
 
 export const $root: ViewStyle = {
+  backgroundColor: THEME.COLORS.GRAY_900,
+};
+
+export const $headerContainer: ViewStyle = {
+  zIndex: 3,
   backgroundColor: THEME.COLORS.GRAY_100,
 };
 
@@ -10,15 +15,17 @@ export const $header: ViewStyle = {
   flexDirection: "row",
   alignItems: "center",
   justifyContent: "space-between",
-  paddingVertical: 20,
-  marginBottom: 20,
+  paddingBottom: 20,
   paddingHorizontal: 32,
+  zIndex: 3,
 };
 
 export const $headerLeft: ViewStyle = {
+  flex: 1,
   flexDirection: "row",
   alignItems: "center",
   gap: 8,
+  height: 24,
 };
 
 export const $scrollHeader: ViewStyle = {
@@ -45,8 +52,8 @@ export const $image: ImageStyle = {
 
 export const $content: ViewStyle = {
   flex: 1,
-  minHeight: "150%",
-  backgroundColor: THEME.COLORS.WHITE,
+
+  paddingHorizontal: 32,
 };
 
 export const $listContainer: ViewStyle = {

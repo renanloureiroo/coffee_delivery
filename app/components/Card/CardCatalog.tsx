@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { CardProps } from ".";
-import { View, Image } from "react-native";
+import { View, Image, Pressable } from "react-native";
 
 import * as styles from "./styles";
 import { Text } from "../Text";
@@ -15,7 +15,14 @@ export const CardCatalog: FC<CardCatalogProps> = ({
   title,
 }) => {
   return (
-    <View style={styles.$containerCardCatalog}>
+    <Pressable
+      style={({ pressed }) => [
+        styles.$containerCardCatalog,
+        {
+          opacity: pressed ? 0.7 : 1,
+        },
+      ]}
+    >
       <View
         style={{
           width: 96,
@@ -61,6 +68,6 @@ export const CardCatalog: FC<CardCatalogProps> = ({
           <Heading text={`${price}`} color="YELLOW_DARK" />
         </View>
       </View>
-    </View>
+    </Pressable>
   );
 };

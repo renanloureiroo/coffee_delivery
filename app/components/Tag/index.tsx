@@ -15,14 +15,15 @@ interface TagProps {
   label: string;
   selected?: boolean;
   selectable?: boolean;
+  onPress?: () => void;
 }
 
 export const Tag: FC<TagProps> = ({
   label,
   selected = false,
   selectable = false,
+  onPress,
 }) => {
-  const [status, setStatus] = useState(() => selected);
   const selectValue = useSharedValue(0);
 
   const $animatedContainerStyle = useAnimatedStyle(() => {
@@ -46,23 +47,25 @@ export const Tag: FC<TagProps> = ({
   });
 
   useEffect(() => {
-    if (status) {
-      selectValue.value = withTiming(1, { duration: 200 });
+    if (selected) {
+      selectValue.value = withTiming(1, { duration: 500 });
     } else {
-      selectValue.value = withTiming(0, { duration: 200 });
+      selectValue.value = withTiming(0, { duration: 500 });
     }
-  }, [status]);
+  }, [selected]);
 
   return (
     <AnimatedPressable
       style={[$container, $animatedContainerStyle]}
       onPress={() => {
         if (selectable) {
-          setStatus((s) => !s);
+          onPress?.();
         }
       }}
     >
-      <Animated.Text style={[$text, $animatedTextStyle]}>{label}</Animated.Text>
+      <Animated.Text style={[$text, $animatedTextStyle]}>
+        {label.toUpperCase()}
+      </Animated.Text>
     </AnimatedPressable>
   );
 };
