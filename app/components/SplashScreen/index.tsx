@@ -1,4 +1,4 @@
-import { Screen } from "@components/screen";
+import { Screen } from "@components/Screen";
 import { THEME } from "@shared/theme";
 import { Dimensions, View, ViewStyle } from "react-native";
 
@@ -17,7 +17,6 @@ import Animated, {
 import { FC, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
 
-const SCREEN_WIDTH = Dimensions.get("window").width;
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 
 interface SplashScreenProps {
@@ -57,12 +56,9 @@ export const SplashScreen: FC<SplashScreenProps> = ({ onTransitionEnd }) => {
       opacity: 0,
       transform: [
         {
-          translateX: SCREEN_WIDTH,
+          translateX: 100,
         },
       ],
-    },
-    30: {
-      opacity: 1,
     },
 
     100: {
@@ -79,7 +75,7 @@ export const SplashScreen: FC<SplashScreenProps> = ({ onTransitionEnd }) => {
       backgroundColor: interpolateColor(
         color.value,
         [0, 1],
-        [THEME.COLORS.BRAND.PURPLE_DARK, THEME.COLORS.BRAND.PURPLE]
+        [THEME.COLORS.PURPLE_DARK, THEME.COLORS.PURPLE]
       ),
     };
   });
@@ -114,14 +110,13 @@ export const SplashScreen: FC<SplashScreenProps> = ({ onTransitionEnd }) => {
       <StatusBar style="light" />
       <Animated.View style={[$wave, waveAnimatedStyle]} />
       <View style={[$logoContainer]}>
-        <Animated.View entering={logoEnteringKeyframe.duration(700)}>
+        <Animated.View entering={logoEnteringKeyframe.duration(500)}>
           <LogoSvg />
         </Animated.View>
         <Animated.View
           entering={logoTextEnteringKeyframe
-            .duration(500)
+            .duration(300)
             .delay(500)
-            .delay(200)
             .withCallback((finished) => {
               "worklet";
               if (finished) {
@@ -155,6 +150,6 @@ const $logoContainer: ViewStyle = {
 const $wave: ViewStyle = {
   borderRadius: 9999,
   position: "absolute",
-  backgroundColor: THEME.COLORS.BRAND.PURPLE,
+  backgroundColor: THEME.COLORS.PURPLE,
   zIndex: 1,
 };

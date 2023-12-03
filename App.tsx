@@ -1,4 +1,5 @@
 import { StatusBar } from "expo-status-bar";
+import { useCallback, useState } from "react";
 
 import { useFonts } from "@shared/hooks";
 
@@ -6,9 +7,6 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import { SplashScreen } from "@components/SplashScreen";
 import { AppRoutes } from "./app/navigator/app.routes";
-import { useCallback, useEffect, useState } from "react";
-
-import * as ExpoSplashScreen from "expo-splash-screen";
 
 export default function App() {
   const [showSplashScreen, setShowSplashScreen] = useState(true);
@@ -17,7 +15,7 @@ export default function App() {
   const onLayoutRootView = useCallback(() => {
     setTimeout(() => {
       setShowSplashScreen(false);
-    }, 500);
+    }, 1000);
   }, []);
 
   if (showSplashScreen || !fontsLoaded) {
@@ -26,7 +24,12 @@ export default function App() {
 
   return (
     <SafeAreaProvider>
-      <StatusBar style="dark" />
+      <StatusBar
+        style="dark"
+        backgroundColor="transparent"
+        animated={true}
+        translucent
+      />
       <AppRoutes />
     </SafeAreaProvider>
   );
