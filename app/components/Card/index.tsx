@@ -30,6 +30,7 @@ export interface CardProps {
   price: number;
   image: ImageSourcePropType;
   variant?: "emphasis" | "default";
+  onPress?: () => void;
 }
 
 export const Card: FC<CardProps> = ({
@@ -40,14 +41,19 @@ export const Card: FC<CardProps> = ({
   image,
   active = false,
   variant = "default",
+  onPress,
 }) => {
   if (variant === "emphasis") {
     return (
-      <CardEmphasis {...{ description, label, price, title, image, active }} />
+      <CardEmphasis
+        {...{ description, label, price, title, image, active, onPress }}
+      />
     );
   }
 
   return (
-    <CardCatalog {...{ description, label, price, title, image, active }} />
+    <CardCatalog
+      {...{ description, label, price, title, image, active, onPress }}
+    />
   );
 };

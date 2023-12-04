@@ -1,8 +1,6 @@
 import { Screen } from "@components/Screen";
 import {
-  FlatList,
   Image,
-  ImageSourcePropType,
   ScrollView,
   SectionList,
   SectionListProps,
@@ -10,7 +8,6 @@ import {
   View,
   ViewStyle,
   ViewToken,
-  useWindowDimensions,
 } from "react-native";
 
 import * as styles from "./styles";
@@ -26,7 +23,6 @@ import Animated, {
   Easing,
   Extrapolate,
   FadeInDown,
-  Keyframe,
   SlideInUp,
   interpolate,
   interpolateColor,
@@ -37,7 +33,11 @@ import Animated, {
 import { HorizontalScroll } from "./HorizontalScroll";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import { THEME } from "@shared/theme";
-import { coffees, Product } from "../../data/coffees";
+
+import { useProducts } from "@shared/hooks/useProducts";
+import { Product } from "../../context/ProductsContext";
+import { useNavigation } from "@react-navigation/native";
+import { AppNavigatorProps } from "../../navigator/app.routes";
 const coffePNG = require("@assets/images/coffee.png");
 
 type SelectionListDataProps = {
@@ -56,14 +56,16 @@ export const HomeScreen = () => {
   const [search, setSearch] = useState<string>("");
   const { paddingTop } = useSafeAreaEdges(["top"]);
 
-  const { width } = useWindowDimensions();
-
   const sectionListRef = useRef<any>(null);
   const scrollY = useSharedValue(0);
   const introContainerPosition = useSharedValue(0);
   const positionY = useSharedValue(-300);
 
-  const sections = coffees.reduce((acumulador, produto) => {
+  const { products } = useProducts();
+
+  const { navigate } = useNavigation<AppNavigatorProps<"Home">>();
+
+  const sections = products.reduce((acumulador, produto) => {
     const { type, name, description, price, image } = produto;
     const produtoFormatado = {
       id: produto.id,
@@ -90,6 +92,10 @@ export const HomeScreen = () => {
     doce: "Doces",
     especial: "Especiais",
   };
+
+  const handleNavigateToProduct = useCallback((id: string) => {
+    navigate("Product", { id });
+  }, []);
 
   const scrollToSection = (sectionIndex: number) => {
     if (sectionListRef.current) {
@@ -328,6 +334,7 @@ export const HomeScreen = () => {
                 description={item.description}
                 price={item.price}
                 image={item.image}
+                onPress={() => handleNavigateToProduct(item.id)}
               />
             )}
           />

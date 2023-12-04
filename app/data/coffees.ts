@@ -1,15 +1,6 @@
 import { ImageSourcePropType } from "react-native";
 
-export type Product = {
-  id: string;
-  type: "tradicional" | "doce" | "especial";
-  name: string;
-  description: string;
-  price: number;
-  image: ImageSourcePropType;
-};
-
-export const coffees: Product[] = [
+export const coffees = [
   {
     id: "tradicional",
     type: "tradicional",

@@ -13,6 +13,7 @@ export const CardCatalog: FC<CardCatalogProps> = ({
   image,
   price,
   title,
+  onPress,
 }) => {
   return (
     <Pressable
@@ -22,6 +23,7 @@ export const CardCatalog: FC<CardCatalogProps> = ({
           opacity: pressed ? 0.7 : 1,
         },
       ]}
+      onPress={onPress}
     >
       <View
         style={{
