@@ -71,6 +71,7 @@ export const $root: ViewStyle = {
   flex: 1,
   padding: 12,
   borderRadius: 6,
+  minHeight: 46,
   height: 46,
   alignItems: "center",
   justifyContent: "center",

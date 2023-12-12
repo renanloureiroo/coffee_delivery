@@ -1,4 +1,4 @@
-import { Card, Heading, Icon, Screen, Text } from "@components/index";
+import { Button, Card, Heading, Icon, Screen, Text } from "@components/index";
 import { useProducts, useSafeAreaEdges } from "@shared/hooks";
 import {
   Image,
@@ -44,7 +44,15 @@ export const CartScreen = () => {
     };
   });
 
+  const totalPrice = items.reduce((acc, current) => {
+    //@ts-ignore
+    acc += current.quantity * current.product!.price;
+    return acc;
+  }, 0);
+
   const swipebleRef = useRef<Swipeable[]>(null);
+
+  const handleConfirm = () => {};
 
   return (
     <Screen safeEdges={["bottom"]} style={styles.$root}>
@@ -104,6 +112,19 @@ export const CartScreen = () => {
           </Animated.View>
         ))}
       </ScrollView>
+
+      <View style={$footer}>
+        <View style={$footerHeader}>
+          <Text text="Valor total:" color="GRAY_200" />
+          <Heading color="GRAY_200">{`R$${totalPrice.toFixed(2)}`}</Heading>
+        </View>
+
+        <Button
+          variant="yellow"
+          title="CONFIRMAR PEDIDO"
+          onPress={handleConfirm}
+        />
+      </View>
     </Screen>
   );
 };
@@ -123,4 +144,17 @@ const $container: ViewStyle = {
 
 const $list: ViewStyle = {
   flexGrow: 1,
+};
+
+const $footer: ViewStyle = {
+  padding: 32,
+  borderTopWidth: 1,
+  borderTopColor: THEME.COLORS.GRAY_700,
+  gap: 20,
+};
+
+const $footerHeader: ViewStyle = {
+  flexDirection: "row",
+  alignItems: "center",
+  justifyContent: "space-between",
 };
