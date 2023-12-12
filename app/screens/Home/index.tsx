@@ -18,7 +18,14 @@ import { CardCatalog } from "../../components/Card/CardCatalog";
 
 import { useSafeAreaEdges } from "@shared/hooks";
 
-import { Search, Text, Heading, Icon, Tag } from "@components/index";
+import {
+  Search,
+  Text,
+  Heading,
+  Icon,
+  Tag,
+  CartButton,
+} from "@components/index";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Animated, {
   Easing,
@@ -265,15 +272,11 @@ export const HomeScreen = () => {
               animated
             />
           </View>
-          <Pressable style={styles.$cartWrapper} onPress={handleNavigateToCart}>
-            <Icon name="Shopping" color="YELLOW_DARK" />
-
-            {quantity > 0 && (
-              <View style={styles.$badge}>
-                <Text text={String(quantity)} color="WHITE" size="xs" />
-              </View>
-            )}
-          </Pressable>
+          <CartButton
+            color="yellow"
+            quantity={quantity}
+            onPress={handleNavigateToCart}
+          />
         </Animated.View>
 
         <Animated.View

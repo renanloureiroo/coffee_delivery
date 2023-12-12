@@ -9,3 +9,4 @@ export * from "./Card";
 export * from "./Tag";
 export * from "./Select";
 export * from "./Button";
+export * from "./CartButton";

@@ -1,5 +1,6 @@
 import {
   Button,
+  CartButton,
   Heading,
   Icon,
   Screen,
@@ -36,11 +37,10 @@ import Animated, {
 export const ProductScreen = () => {
   const [valueSelect, setValueSelect] = useState("");
   const [quantity, setQuantity] = useState<number>(1);
-  const { getProductsById, addProductMyCart } = useProducts();
+  const { getProductsById, addProductMyCart, getQuantityItems } = useProducts();
   const { paddingTop } = useSafeAreaEdges(["top"]);
   const { params } = useRoute<AppNavigatorRouteProps<"Product">>();
-  const { goBack } =
-    useNavigation<NavigationProp<AppNavigatorProps<"Product">>>();
+  const { goBack, navigate } = useNavigation<AppNavigatorProps<"Product">>();
 
   const { showNotification } = useNotification();
 
@@ -61,8 +61,14 @@ export const ProductScreen = () => {
   const erroValue = useSharedValue(0);
   const product = getProductsById(id);
 
+  const cartQuantity = getQuantityItems();
+
   const handleChangeQuantity = useCallback((value: number) => {
     setQuantity(value);
+  }, []);
+
+  const handleNavigateToCart = useCallback(() => {
+    navigate("Cart");
   }, []);
 
   const headerAnimatedStyles = useAnimatedStyle(() => {
@@ -154,7 +160,7 @@ export const ProductScreen = () => {
         <View style={$headerStyle}>
           <Icon name="ArrowLeft" color="WHITE" onPress={goBack} />
 
-          <Icon name="Shopping" color="PURPLE" />
+          <CartButton quantity={cartQuantity} onPress={handleNavigateToCart} />
         </View>
 
         <View style={styles.$productInfo}>
