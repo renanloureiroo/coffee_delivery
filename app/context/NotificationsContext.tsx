@@ -9,6 +9,8 @@ import Animated, {
   SlideInDown,
   SlideOutDown,
 } from "react-native-reanimated";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { AppRoutesParamsList } from "app/navigator/app.routes";
 
 interface NotificationsContextProps {
   showNotification: (message: ReactNode) => void;
@@ -29,6 +31,8 @@ export const NotificationsProvider: FC<NotificationsProviderProps> = ({
   const [messageComponent, setMessageComponent] = useState<ReactNode>("");
   const { paddingBottom } = useSafeAreaEdges(["bottom"]);
 
+  const { navigate } = useNavigation<NavigationProp<AppRoutesParamsList>>();
+
   const $containerStyles = [
     $root,
     {
@@ -43,6 +47,11 @@ export const NotificationsProvider: FC<NotificationsProviderProps> = ({
     setTimeout(() => {
       setShow(false);
     }, 3000);
+  }, []);
+
+  const closeNotification = useCallback(() => {
+    setShow(false);
+    navigate("Cart");
   }, []);
 
   return (
@@ -77,6 +86,7 @@ export const NotificationsProvider: FC<NotificationsProviderProps> = ({
               color: THEME.COLORS.PURPLE,
               borderless: true,
             }}
+            onPress={closeNotification}
           >
             <Text text="Ver" color="PURPLE" />
             <Icon name="ArrowRight" color="PURPLE" />

@@ -5,13 +5,19 @@ import {
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import { ProductScreen, HomeScreen, CartScreen } from "../screens";
+import {
+  ProductScreen,
+  HomeScreen,
+  CartScreen,
+  SuccessScreen,
+} from "../screens";
 import { ProductsProvider, NotificationsProvider } from "../context";
 
-type AppRoutesParamsList = {
+export type AppRoutesParamsList = {
   Home: undefined;
   Product: { id: string };
   Cart: undefined;
+  Success: undefined;
 };
 
 export type AppNavigatorProps<T extends keyof AppRoutesParamsList> =
@@ -25,9 +31,9 @@ export const { Navigator, Screen } =
 
 export const AppRoutes = () => {
   return (
-    <NotificationsProvider>
-      <ProductsProvider>
-        <NavigationContainer>
+    <NavigationContainer>
+      <NotificationsProvider>
+        <ProductsProvider>
           <Navigator
             screenOptions={{
               headerShown: false,
@@ -36,9 +42,10 @@ export const AppRoutes = () => {
             <Screen name="Home" component={HomeScreen} />
             <Screen name="Product" component={ProductScreen} />
             <Screen name="Cart" component={CartScreen} />
+            <Screen name="Success" component={SuccessScreen} />
           </Navigator>
-        </NavigationContainer>
-      </ProductsProvider>
-    </NotificationsProvider>
+        </ProductsProvider>
+      </NotificationsProvider>
+    </NavigationContainer>
   );
 };

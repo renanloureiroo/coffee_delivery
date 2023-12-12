@@ -58,8 +58,8 @@ export const Button: FC<ButtonProps> = ({
   return (
     <PressableAnimated
       style={[$root, animatedStyles]}
-      onPressIn={onPressIn}
-      onPressOut={onPressOut}
+      onPressIn={!disabled ? onPressIn : undefined}
+      onPressOut={!disabled ? onPressOut : undefined}
       onPress={onPress}
     >
       <Text text={title} size="sm" color="WHITE" style={$buttonTitle} />
@@ -72,6 +72,7 @@ export const $root: ViewStyle = {
   padding: 12,
   borderRadius: 6,
   minHeight: 46,
+  maxHeight: 46,
   height: 46,
   alignItems: "center",
   justifyContent: "center",

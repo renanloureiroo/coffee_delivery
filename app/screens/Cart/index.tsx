@@ -1,25 +1,24 @@
-import { Button, Card, Heading, Icon, Screen, Text } from "@components/index";
-import { useProducts, useSafeAreaEdges } from "@shared/hooks";
 import {
-  Image,
-  ImageStyle,
-  ScrollView,
-  StyleProp,
-  View,
-  ViewStyle,
-  useAnimatedValue,
-} from "react-native";
+  Button,
+  Card,
+  Heading,
+  Icon,
+  Screen,
+  Text,
+  Counter,
+} from "@components/index";
+import { useProducts, useSafeAreaEdges } from "@shared/hooks";
+import { FlatList, ScrollView, StyleProp, View, ViewStyle } from "react-native";
 
 import * as styles from "./styles";
 import Animated, {
   Layout,
   SlideInLeft,
   SlideOutRight,
-  useSharedValue,
 } from "react-native-reanimated";
 import { Swipeable } from "react-native-gesture-handler";
 import { useRef } from "react";
-import { Counter } from "@components/Counter";
+
 import { THEME } from "@shared/theme";
 import { useNavigation } from "@react-navigation/native";
 import { AppNavigatorProps } from "app/navigator/app.routes";
@@ -68,11 +67,12 @@ export const CartScreen = () => {
           }}
         />
       </View>
-      <ScrollView
-        contentContainerStyle={$list}
+      <FlatList
+        keyExtractor={(item) => item.id}
         showsVerticalScrollIndicator={false}
-      >
-        {items.map((item) => (
+        contentContainerStyle={$list}
+        data={items}
+        renderItem={({ item }) => (
           <Animated.View
             key={item.id}
             entering={SlideInLeft}
@@ -110,8 +110,8 @@ export const CartScreen = () => {
               />
             </Swipeable>
           </Animated.View>
-        ))}
-      </ScrollView>
+        )}
+      />
 
       <View style={$footer}>
         <View style={$footerHeader}>
@@ -123,6 +123,7 @@ export const CartScreen = () => {
           variant="yellow"
           title="CONFIRMAR PEDIDO"
           onPress={handleConfirm}
+          disabled={items.length === 0}
         />
       </View>
     </Screen>

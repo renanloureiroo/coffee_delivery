@@ -16,6 +16,7 @@ interface HeadingProps extends Omit<RNTextProps, "children"> {
   weight?: "bold";
   size?: "xs" | "sm" | "md" | "lg" | "xl";
   animated?: boolean;
+  align?: TextStyle["textAlign"];
 }
 
 export const Heading: FC<HeadingProps> = ({
@@ -26,11 +27,13 @@ export const Heading: FC<HeadingProps> = ({
   weight = "bold",
   style: $overrideStyles,
   animated = false,
+  align = "auto",
   ...rest
 }) => {
   const $styles = [
     {
       color: THEME.COLORS[color],
+      textAlign: align,
     },
     $sizes[size],
     $weight[weight],

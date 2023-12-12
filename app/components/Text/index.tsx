@@ -5,6 +5,7 @@ import {
   TextProps as RNTextProps,
   StyleProp,
   TextStyle,
+  ViewStyle,
 } from "react-native";
 import { $sizes, $weight } from "./styles";
 import Animated from "react-native-reanimated";
@@ -16,6 +17,7 @@ interface TextProps extends Omit<RNTextProps, "children"> {
   weight?: "regular" | "bold";
   size?: "xs" | "sm" | "md" | "lg";
   animated?: boolean;
+  align?: TextStyle["textAlign"];
 }
 
 export const Text: FC<TextProps> = ({
@@ -26,14 +28,17 @@ export const Text: FC<TextProps> = ({
   weight = "regular",
   style: $overrideStyles,
   animated = false,
+  align = "auto",
   ...rest
 }) => {
   const $styles = [
     {
       color: THEME.COLORS[color],
+      textAlign: align,
     },
     $sizes[size],
     $weight[weight],
+
     $overrideStyles,
   ] as StyleProp<TextStyle>;
 

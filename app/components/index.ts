@@ -10,3 +10,4 @@ export * from "./Tag";
 export * from "./Select";
 export * from "./Button";
 export * from "./CartButton";
+export * from "./Counter";
