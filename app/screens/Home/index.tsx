@@ -1,6 +1,7 @@
 import { Screen } from "@components/Screen";
 import {
   Image,
+  Pressable,
   ScrollView,
   SectionList,
   SectionListProps,
@@ -17,7 +18,7 @@ import { CardCatalog } from "../../components/Card/CardCatalog";
 
 import { useSafeAreaEdges } from "@shared/hooks";
 
-import { Search, Text, Heading, Icon, Card, Tag } from "@components/index";
+import { Search, Text, Heading, Icon, Tag } from "@components/index";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Animated, {
   Easing,
@@ -38,6 +39,7 @@ import { useProducts } from "@shared/hooks/useProducts";
 import { Product } from "../../context/ProductsContext";
 import { useNavigation } from "@react-navigation/native";
 import { AppNavigatorProps } from "../../navigator/app.routes";
+
 const coffePNG = require("@assets/images/coffee.png");
 
 type SelectionListDataProps = {
@@ -56,12 +58,15 @@ export const HomeScreen = () => {
   const [search, setSearch] = useState<string>("");
   const { paddingTop } = useSafeAreaEdges(["top"]);
 
-  const sectionListRef = useRef<any>(null);
+  const sectionListRef =
+    useRef<SectionList<Product, SelectionListDataProps>>(null);
   const scrollY = useSharedValue(0);
   const introContainerPosition = useSharedValue(0);
   const positionY = useSharedValue(-300);
 
-  const { products } = useProducts();
+  const { products, getQuantityItems } = useProducts();
+
+  const quantity = getQuantityItems();
 
   const { navigate } = useNavigation<AppNavigatorProps<"Home">>();
 
@@ -95,6 +100,10 @@ export const HomeScreen = () => {
 
   const handleNavigateToProduct = useCallback((id: string) => {
     navigate("Product", { id });
+  }, []);
+
+  const handleNavigateToCart = useCallback(() => {
+    navigate("Cart");
   }, []);
 
   const scrollToSection = (sectionIndex: number) => {
@@ -137,9 +146,14 @@ export const HomeScreen = () => {
   const onPanUp = Gesture.Pan()
     .activateAfterLongPress(200)
     .onUpdate((event) => {
-      if (event.translationY < 0) {
+      console.log("EVENT", event.translationY);
+      if (event.translationY < -20) {
+        console.log("ENTROU");
         introContainerPosition.value = event.translationY;
-      } else {
+      }
+
+      if (event.translationY > 20) {
+        console.log("ENTROU > 20");
         introContainerPosition.value = scrollY.value + event.translationY;
       }
     })
@@ -251,8 +265,15 @@ export const HomeScreen = () => {
               animated
             />
           </View>
+          <Pressable style={styles.$cartWrapper} onPress={handleNavigateToCart}>
+            <Icon name="Shopping" color="YELLOW_DARK" />
 
-          <Icon name="Shopping" color="YELLOW_DARK" />
+            {quantity > 0 && (
+              <View style={styles.$badge}>
+                <Text text={String(quantity)} color="WHITE" size="xs" />
+              </View>
+            )}
+          </Pressable>
         </Animated.View>
 
         <Animated.View

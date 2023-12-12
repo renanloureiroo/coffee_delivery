@@ -1,39 +1,26 @@
-import {
-  Image,
-  ImageSourcePropType,
-  View,
-  useWindowDimensions,
-} from "react-native";
+import { ImageSourcePropType } from "react-native";
 
-import * as styles from "./styles";
-import Animated, {
-  interpolate,
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming,
-} from "react-native-reanimated";
-import { FC, useEffect } from "react";
-import { Tag } from "../Tag";
-import { Heading } from "../Heading";
-import { Text } from "../Text";
-import { THEME } from "@shared/theme";
+import { FC } from "react";
 import { CardEmphasis } from "./CardEmphasis";
 import { CardCatalog } from "./CardCatalog";
-
-const expressoPNG = require("../../assets/images/expresso.png");
+import { CardCart } from "./CardCart";
 
 export interface CardProps {
+  id?: string;
   active?: boolean;
-  label: string;
+  label?: string;
   title: string;
-  description: string;
+  description?: string;
   price: number;
   image: ImageSourcePropType;
-  variant?: "emphasis" | "default";
+  variant?: "emphasis" | "cart" | "default";
   onPress?: () => void;
+  size?: string;
+  quantity: number;
 }
 
 export const Card: FC<CardProps> = ({
+  id,
   description,
   label,
   price,
@@ -42,7 +29,28 @@ export const Card: FC<CardProps> = ({
   active = false,
   variant = "default",
   onPress,
+  size = "0",
+  quantity,
 }) => {
+  if (variant === "cart") {
+    return (
+      <CardCart
+        {...{
+          description,
+          label,
+          price,
+          title,
+          image,
+          active,
+          onPress,
+          size,
+          quantity,
+          id,
+        }}
+      />
+    );
+  }
+
   if (variant === "emphasis") {
     return (
       <CardEmphasis

@@ -7,3 +7,5 @@ export * from "./Search";
 export * from "./Icon";
 export * from "./Card";
 export * from "./Tag";
+export * from "./Select";
+export * from "./Button";

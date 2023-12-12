@@ -6,7 +6,8 @@ import * as styles from "./styles";
 import { Text } from "../Text";
 import { Heading } from "../Heading";
 
-interface CardCatalogProps extends Omit<CardProps, "active" | "label"> {}
+interface CardCatalogProps
+  extends Omit<CardProps, "active" | "label" | "size" | "quantity"> {}
 
 export const CardCatalog: FC<CardCatalogProps> = ({
   description,

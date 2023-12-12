@@ -4,13 +4,14 @@ import {
   RouteProp,
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { HomeScreen } from "../screens/Home";
-import { ProductScreen } from "../screens/Product";
-import { ProductsProvider } from "../context/ProductsContext";
+
+import { ProductScreen, HomeScreen, CartScreen } from "../screens";
+import { ProductsProvider, NotificationsProvider } from "../context";
 
 type AppRoutesParamsList = {
   Home: undefined;
   Product: { id: string };
+  Cart: undefined;
 };
 
 export type AppNavigatorProps<T extends keyof AppRoutesParamsList> =
@@ -24,17 +25,20 @@ export const { Navigator, Screen } =
 
 export const AppRoutes = () => {
   return (
-    <ProductsProvider>
-      <NavigationContainer>
-        <Navigator
-          screenOptions={{
-            headerShown: false,
-          }}
-        >
-          <Screen name="Home" component={HomeScreen} />
-          <Screen name="Product" component={ProductScreen} />
-        </Navigator>
-      </NavigationContainer>
-    </ProductsProvider>
+    <NotificationsProvider>
+      <ProductsProvider>
+        <NavigationContainer>
+          <Navigator
+            screenOptions={{
+              headerShown: false,
+            }}
+          >
+            <Screen name="Home" component={HomeScreen} />
+            <Screen name="Product" component={ProductScreen} />
+            <Screen name="Cart" component={CartScreen} />
+          </Navigator>
+        </NavigationContainer>
+      </ProductsProvider>
+    </NotificationsProvider>
   );
 };

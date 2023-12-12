@@ -16,7 +16,7 @@ import { Tag } from "../Tag";
 
 const PressableAnimated = Animated.createAnimatedComponent(Pressable);
 
-interface CardEmphasisProps extends CardProps {}
+interface CardEmphasisProps extends Omit<CardProps, "size" | "quantity"> {}
 
 export const CardEmphasis: FC<CardEmphasisProps> = ({
   description,

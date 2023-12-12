@@ -68,3 +68,23 @@ export const $tags: ViewStyle = {
   marginTop: 12,
   marginBottom: 16,
 };
+
+export const $cartWrapper: ViewStyle = {
+  position: "relative",
+  width: 36,
+  height: 36,
+  alignItems: "center",
+  justifyContent: "center",
+};
+
+export const $badge: ViewStyle = {
+  backgroundColor: THEME.COLORS.YELLOW_DARK,
+  width: 20,
+  height: 20,
+  alignItems: "center",
+  justifyContent: "center",
+  position: "absolute",
+  top: -10,
+  right: -10,
+  borderRadius: 9999,
+};

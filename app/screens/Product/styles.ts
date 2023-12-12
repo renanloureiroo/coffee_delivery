@@ -29,6 +29,7 @@ export const $productInfoHeader: ViewStyle = {
 
 export const $productInfoHeaderTitle: ViewStyle = {
   gap: 12,
+  alignItems: "flex-start",
 };
 
 export const $productInfoDescription: TextStyle = {
@@ -39,4 +40,21 @@ export const $productInfoHeaderPrice: ViewStyle = {
   flexDirection: "row",
   alignItems: "center",
   gap: 2,
+};
+export const $footer: ViewStyle = {
+  paddingTop: 42,
+  paddingHorizontal: 32,
+};
+
+export const $coffeeSize: ViewStyle = {
+  flexDirection: "row",
+  alignItems: "center",
+  marginBottom: 20,
+  width: "100%",
+  gap: 8,
+  marginTop: 8,
+};
+
+export const $textBold: TextStyle = {
+  fontFamily: THEME.TYPOGRAPHY.ROBOTO.BOLD,
 };

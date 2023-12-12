@@ -39,6 +39,7 @@ export const Icon: FC<IconProps> = ({
   androidRippleColor = "GRAY_500",
   size = 24,
   onPress,
+  style,
   ...rest
 }) => {
   const Svg = icons[name];
@@ -51,11 +52,14 @@ export const Icon: FC<IconProps> = ({
           borderless: true,
           color: THEME.COLORS[androidRippleColor],
         }}
-        style={({ pressed }) => ({
-          height: size,
-          width: size,
-          opacity: Platform.OS === "ios" ? (pressed ? 0.5 : 1) : 1,
-        })}
+        style={({ pressed }) => [
+          {
+            height: size,
+            width: size,
+            opacity: Platform.OS === "ios" ? (pressed ? 0.5 : 1) : 1,
+          },
+          style,
+        ]}
       >
         <Svg color={THEME.COLORS[color]} width={size} height={size} {...rest} />
       </Pressable>
